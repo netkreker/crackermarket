@@ -11,5 +11,5 @@ import javax.persistence.Table;
 public class Product extends BaseEntity {
     @Column(name = "CATEGORY_ID")
     private Category category;
-    
+
 }

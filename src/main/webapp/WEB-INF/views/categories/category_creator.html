@@ -2,10 +2,15 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create new category</title>
 </head>
 <body>
     <table>
+        <tr>
+            <td>
+                <a href="/"><button>Main page</button></a>
+            </td>
+        </tr>
         <!--/*@thymesVar id="category" type=""*/-->
         <form th:method="POST" th:action="@{/category/create}" th:object="${category}">
             <tr>
@@ -13,7 +18,7 @@
                    <label for="categoryName">Category Name</label>
                 </td>
                 <td>
-                    <input type="text" th:field="*{name}" id="categoryName">
+                    <input type="text" th:field="*{name}" id="categoryName" required>
                 </td>
             </tr>
             <tr>

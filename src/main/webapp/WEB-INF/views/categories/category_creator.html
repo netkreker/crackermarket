@@ -5,14 +5,14 @@
     <title>Create new category</title>
 </head>
 <body>
+<script th:src="@{/assets/js/script.js}"></script>
     <table>
         <tr>
             <td>
                 <a href="/"><button>Main page</button></a>
             </td>
         </tr>
-        <!--/*@thymesVar id="category" type=""*/-->
-        <form th:method="POST" th:action="@{/category/create}" th:object="${category}">
+        <form onsubmit="return saveCategory()" th:method="POST" th:action="@{/category/create}" th:object="${category}">
             <tr>
                 <td>
                    <label for="categoryName">Category Name</label>

@@ -24,6 +24,7 @@ public class CategoryDAO {
         entityManager.persist(category);
         entityManager.getTransaction().commit();
     }
+    
     public List<Category> findCategoryByName(String name) {
         List<Category> categories = null;
         entityManager.getTransaction().begin();

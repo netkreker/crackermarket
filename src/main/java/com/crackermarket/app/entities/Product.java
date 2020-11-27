@@ -4,13 +4,13 @@ import com.crackermarket.app.core.BaseEntity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "PRODUCT")
 public class Product extends BaseEntity {
-    @Column(name = "CATEGORY_ID")
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID")
     private Category category;
     @Column(name = "PRICE")
     private BigDecimal price;

@@ -24,8 +24,12 @@ public class CategoryController {
 
     @PostMapping("/create")
     public String createCategory(@ModelAttribute("category") Category category,
-                                 @RequestParam(value = "parentCategoryId") String id) {
-        category.setParentCategory(categoryDAO.findCategoryById(UUID.fromString(id)));
+                                 @RequestParam(value = "parentCategoryId", required = false) String id) {
+        Category category1 = null;
+        if(id != null) {
+            category1 = categoryDAO.findCategoryById(UUID.fromString(id));
+        }
+        category.setParentCategory(category1);
         categoryDAO.saveCategory(category);
         return "redirect:/";
     }

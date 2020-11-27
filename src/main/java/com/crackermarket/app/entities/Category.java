@@ -19,4 +19,13 @@ public class Category extends BaseEntity {
     public void setParentCategory(Category parentCategory) {
         this.parentCategory = parentCategory;
     }
+
+    @Override
+    public String toString() {
+        return "Category { " +
+                " name= " + getName() +
+                " parentCategory= " + getParentCategory() +
+                " id= " + getId() +
+                " }";
+    }
 }

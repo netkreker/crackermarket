@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <table>
+        <!--/*@thymesVar id="category" type=""*/-->
+        <form th:method="POST" th:action="@{/category/create}" th:object="${category}">
+            <tr>
+                <td>
+                   <label for="categoryName">Category Name</label>
+                </td>
+                <td>
+                    <input type="text" th:field="*{name}" id="categoryName">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="parentCategory">Parent category</label>
+                </td>
+                <td>
+                    <select id="parentCategory" name="parentCategoryId">
+                        <option th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.name}"></option>
+                    </select>
+                </td>
+            </tr>
+           <tr>
+               <td>
+                   <input type="submit" value="Create category">
+               </td>
+           </tr>
+
+        </form>
+
+    </table>
+</body>
+</html>

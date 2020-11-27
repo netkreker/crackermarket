@@ -59,11 +59,11 @@ public class SpringConfig implements WebMvcConfigurer {
         }
     }
 
-//    @Bean
-//    public EntityManager entityManager() {
-//        EntityManager entityManager = Persistence
-//                .createEntityManagerFactory("TEST")
-//                .createEntityManager();
-//        return entityManager;
-//    }
+    @Bean
+    public EntityManager entityManager() {
+        EntityManager entityManager = Persistence
+                .createEntityManagerFactory("crackerMarketDB")
+                .createEntityManager();
+        return entityManager;
+    }
 }

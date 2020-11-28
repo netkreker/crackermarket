@@ -1,6 +1,5 @@
 package com.crackermarket.app.entities;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 

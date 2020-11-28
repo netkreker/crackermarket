@@ -5,7 +5,9 @@ import com.crackermarket.app.core.BaseEntity;
 import javax.persistence.*;
 import java.util.Set;
 
+
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract class User extends BaseEntity {
 
     @Column(name = "USER_NAME")

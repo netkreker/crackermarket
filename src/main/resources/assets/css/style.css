@@ -16,6 +16,10 @@ td {
     padding: 3px;
 }
 
+.text-field-class{
+    width: 200px;
+}
+
 .emp_table {
     border: 1px solid grey;
     border-color: brown;

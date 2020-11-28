@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Create new category</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}" />
 </head>
 <body>
 <script th:src="@{/assets/js/script.js}"></script>
@@ -18,7 +19,7 @@
                    <label for="categoryName">Category Name</label>
                 </td>
                 <td>
-                    <input type="text" th:field="*{name}" id="categoryName" required>
+                    <input type="text" th:field="*{name}" id="categoryName" required class="text-field-class">
                 </td>
             </tr>
             <tr>
@@ -26,7 +27,7 @@
                     <label for="parentCategory">Parent category</label>
                 </td>
                 <td>
-                    <select id="parentCategory" name="parentCategoryId">
+                    <select id="parentCategory" name="parentCategoryId"  class="text-field-class">
                         <option th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.name}"></option>
                     </select>
                 </td>

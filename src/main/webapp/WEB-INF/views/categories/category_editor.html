@@ -7,6 +7,37 @@
 </head>
 <body>
 <script th:src="@{/assets/js/script.js}"></script>
+<table>
+    <form onsubmit="return saveCategory()" th:method="POST" th:action="@{/employees/update}" th:object="${category}">
+        <tr>
+            <td>
+                <label for="categoryName">Category name</label>
+            </td>
+            <td>
+                <input type="text" th:field="*{name}" id="categoryName">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="parentCategory">Parent Category</label>
+            </td>
+            <td>
+                <select id="parentCategory" name="parentCategoryId">
+                    <option th:value="${category.parentCategory.id}" th:text="${category.parentCategory.name}"></option>
+                    <option th:each="parentCategory : ${parentCategories}"
+                            th:value="${parentCategory.id}" th:text="${parentCategory.name}"></option>
+                </select>
+            </td>
+        </tr>
 
+    </form>
+    <td>
+        <a href="javascript:history.back()" onclick="return discardChanges()"><button>Cancel</button></a>
+    </td>
+    </tr>
+
+
+
+</table>
 </body>
 </html>

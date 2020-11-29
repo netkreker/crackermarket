@@ -67,7 +67,7 @@ public class CategoryController {
                 .getResultList();
         entityManager.getTransaction().commit();
         model.addAttribute("category", category);
-        model.addAttribute("parentCategory", parentCategories);
+        model.addAttribute("parentCategories", parentCategories);
         model.addAttribute("categoryParameters", category.getParameters());
         return "/categories/category_editor";
     }

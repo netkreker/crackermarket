@@ -8,20 +8,26 @@
 <body>
 <script th:src="@{/assets/js/script.js}"></script>
 <table>
-    <form onsubmit="return saveCategory()" th:method="POST" th:action="@{/employees/update}" th:object="${category}">
+    <form onsubmit="return saveCategory()" th:method="POST" th:action="@{/category/update}" th:object="${category}">
+        <tr>
+            <td>
+                <input type="hidden" id="categoryId" name="categoryId" th:value="${category.getId()}">
+            </td>
+        </tr>
         <tr>
             <td>
                 <label for="categoryName">Category name</label>
             </td>
             <td>
-                <input type="text" th:field="*{name}" id="categoryName">
+                <input type="text" name="categoryName" id="categoryName" th:value="${category.getName()}">
             </td>
         </tr>
+
         <tr>
             <td>
                 <label for="parentCategory">Parent Category</label>
             </td>
-            <td>
+            <td th:if="${!parentCategories.empty}">
                 <select id="parentCategory" name="parentCategoryId">
                     <option th:value="${category.parentCategory.id}" th:text="${category.parentCategory.name}"></option>
                     <option th:each="parentCategory : ${parentCategories}"
@@ -29,14 +35,18 @@
                 </select>
             </td>
         </tr>
+        <tr>
+            <td>
+                <input type="submit" value="Save category">
+            </td>
+        </tr>
+
 
     </form>
     <td>
         <a href="javascript:history.back()" onclick="return discardChanges()"><button>Cancel</button></a>
     </td>
     </tr>
-
-
 
 </table>
 </body>

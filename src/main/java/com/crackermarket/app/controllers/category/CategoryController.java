@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -61,14 +62,27 @@ public class CategoryController {
     public String editEmployee(@PathVariable("id") String id, Model model) {
         Category category = categoryDAO.findCategoryById(UUID.fromString(id));
         model.addAttribute("category", category);
+
         entityManager.getTransaction().begin();
-        List<Category> parentCategories = entityManager.createQuery("SELECT c FROM Category c WHERE c.id NOT IN (:selfId)")
-                .setParameter("selfId", category.getId())
-                .getResultList();
+        Query query = entityManager.createQuery("SELECT c FROM Category c WHERE c.id NOT IN (:selfId)");
+        query.setParameter("selfId", category.getId());
+        List<Category> parentCategories = query.getResultList();
         entityManager.getTransaction().commit();
+
         model.addAttribute("category", category);
         model.addAttribute("parentCategories", parentCategories);
         model.addAttribute("categoryParameters", category.getParameters());
+        model.addAttribute("categoryId", category.getId());
         return "/categories/category_editor";
+    }
+
+    @PostMapping("/update")
+    public String updateCategory(@RequestParam(value = "categoryName") String categoryName,
+                                 @RequestParam(value = "categoryId") String categoryId) {
+        Category category = new Category();
+        category.setId(UUID.fromString(categoryId));
+        category.setName(categoryName);
+        categoryDAO.updateCategory(category);
+        return "redirect:/category/browser";
     }
 }

@@ -40,4 +40,10 @@ public class CategoryDAO {
         entityManager.getTransaction().commit();
         return categories;
     }
+
+    public void updateCategory(Category category) {
+        entityManager.getTransaction().begin();
+        entityManager.merge(category);
+        entityManager.getTransaction().commit();
+    }
 }

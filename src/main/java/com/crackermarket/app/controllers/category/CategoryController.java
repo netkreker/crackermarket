@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityManager;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -21,6 +22,9 @@ public class CategoryController {
     CategoryDAO categoryDAO;
     @Autowired
     ParameterDAO parameterDao;
+    @Autowired
+    private EntityManager entityManager;
+
 
     @GetMapping("/browser")
     public String showAllCategories(Model model) {
@@ -51,5 +55,20 @@ public class CategoryController {
 
         categoryDAO.saveCategory(category);
         return "redirect:/";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editEmployee(@PathVariable("id") String id, Model model) {
+        Category category = categoryDAO.findCategoryById(UUID.fromString(id));
+        model.addAttribute("category", category);
+        entityManager.getTransaction().begin();
+        List<Category> parentCategories = entityManager.createQuery("SELECT c FROM Category c WHERE c.id NOT IN (:selfId)")
+                .setParameter("selfId", category.getId())
+                .getResultList();
+        entityManager.getTransaction().commit();
+        model.addAttribute("category", category);
+        model.addAttribute("parentCategory", parentCategories);
+        model.addAttribute("categoryParameters", category.getParameters());
+        return "/categories/category_editor";
     }
 }

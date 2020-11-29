@@ -12,8 +12,17 @@ public class Category extends BaseEntity {
     @JoinColumn(name = "PARENT_CATEGORY")
     private Category parentCategory;
 
-    @OneToMany(mappedBy = "category")
+//    @OneToMany(mappedBy = "category")
+    @ManyToMany
     private Set<Parameter> parameters;
+
+    public Set<Parameter> getParameters() {
+        return parameters;
+    }
+
+    public void setParameters(Set<Parameter> parameters) {
+        this.parameters = parameters;
+    }
 
     public Category getParentCategory() {
         return parentCategory;

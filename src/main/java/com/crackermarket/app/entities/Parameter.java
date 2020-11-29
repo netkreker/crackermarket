@@ -3,6 +3,7 @@ package com.crackermarket.app.entities;
 import com.crackermarket.app.core.BaseEntity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "PARAMETER")
@@ -12,9 +13,8 @@ public class Parameter extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
-    @ManyToOne
-    @JoinColumn(name = "CATEGORY_ID")
-    private Category category;
+    @ManyToMany
+    private List<Category> category;
     @Column(name = "PARAMETER_TYPE")
     private ParameterType parameterType;
 
@@ -28,12 +28,12 @@ public class Parameter extends BaseEntity {
         this.name = name;
     }
 
-    public Category getCategory() {
+    public List<Category> getCategories() {
         return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public void setCategories(List<Category> categories) {
+        this.category = categories;
     }
 
     public ParameterType getParameterType() {

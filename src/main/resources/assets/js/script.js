@@ -7,3 +7,8 @@ function saveCategory() {
     var save = confirm('Save category?');
     return save;
 }
+
+function saveParameter() {
+    var save = confirm('Save parameter?');
+    return save;
+}

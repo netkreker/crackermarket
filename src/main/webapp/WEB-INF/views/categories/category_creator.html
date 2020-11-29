@@ -32,6 +32,16 @@
                     </select>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <label for="parameters">Parameters</label>
+                </td>
+                <td>
+                    <select id="parameters" name="parameterId"  class="text-field-class">
+                        <option th:each="parameter : ${parameters}" th:value="${parameter.getId()}" th:text="${parameter.name}"></option>
+                    </select>
+                </td>
+            </tr>
 
            <tr>
                <td>

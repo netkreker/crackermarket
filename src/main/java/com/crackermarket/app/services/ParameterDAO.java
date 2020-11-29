@@ -10,22 +10,22 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class ParameterDao {
+public class ParameterDAO {
     @Autowired
     private EntityManager entityManager;
 
-    public Category findParameterById(UUID id) {
+    public Parameter findParameterById(UUID id) {
         entityManager.getTransaction().begin();
-        Category category = entityManager.find(Category.class, id);
+        Parameter parameter = entityManager.find(Parameter.class, id);
         entityManager.getTransaction().commit();
-        return category;
+        return parameter;
     }
     public void saveParameter(Parameter parameter) {
         entityManager.getTransaction().begin();
         entityManager.persist(parameter);
         entityManager.getTransaction().commit();
     }
-    public List<Parameter> parameters() {
+    public List<Parameter> findAllParameters() {
         entityManager.getTransaction().begin();
         List <Parameter> parameters = entityManager.createQuery("SELECT p FROM Parameter p").getResultList();
         entityManager.getTransaction().commit();

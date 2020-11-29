@@ -13,7 +13,7 @@
             <a href="/"><button>Main page</button></a>
         </td>
     </tr>
-    <form onsubmit="return saveCategory()" th:method="POST" th:action="@{/parameter/create}" th:object="${parameter}">
+    <form onsubmit="return saveParameter()" th:method="POST" th:action="@{/parameter/create}" th:object="${parameter}">
         <tr>
             <td>
                 <label for="parameterName">Parameter Name</label>

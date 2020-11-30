@@ -28,6 +28,9 @@ public abstract class User extends BaseEntity {
     @OneToMany(mappedBy = "user")
     protected Set<Address> addresses;
 
+    @OneToMany(mappedBy = "user")
+    protected Set<Feedback> feedbacks;
+
     public String getUserName() { return userName; }
 
     public void setUserName(String userName) { this.userName = userName; }
@@ -51,6 +54,10 @@ public abstract class User extends BaseEntity {
     public Set<Address> getAddresses() { return addresses; }
 
     public void setAddresses(Set<Address> addresses) { this.addresses = addresses; }
+
+    public Set<Feedback> getFeedbacks() { return feedbacks; }
+
+    public void setFeedbacks(Set<Feedback> feedbacks) { this.feedbacks = feedbacks; }
 
     @Override
     public String toString() {

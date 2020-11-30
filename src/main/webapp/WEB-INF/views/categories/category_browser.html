@@ -21,7 +21,11 @@
         <tr th:each="category : ${categories}">
             <td><p th:text="${category.name}"></p></td>
             <td><p th:text="${category?.parentCategory?.name}"></p></td>
-            <td th:each="parameter : ${category.getParameters()}"><p th:text="${parameter.getName()}"></p></td>
+            <td>
+                <span th:each="parameter : ${category.getParameters()}">
+                <p th:text="${parameter.getName()}"></p>
+                </span>
+            </td>
             <td><a th:href="@{/category/edit/{id}(id=${category.getId()})}">edit</a>/
                 <a th:href="@{/category/remove/{id}(id=${category.getId()})}" onclick="return confirm('Are you sure?')">remove</a></td>
         </tr>

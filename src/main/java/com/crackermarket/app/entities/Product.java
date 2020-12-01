@@ -9,13 +9,17 @@ import java.util.Set;
 @Entity
 @Table(name = "PRODUCT")
 public class Product extends BaseEntity {
+
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID")
     private Category category;
+
     @Column(name = "PRICE")
     private BigDecimal price;
-    @OneToMany(mappedBy = "product")
-    private Set<Parameter> parameters;
+
+    @OneToMany
+    private Set<ParameterValue> parameterValues;
+
     @Column(name = "COUNT")
     private Integer count;
 
@@ -33,14 +37,6 @@ public class Product extends BaseEntity {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
-    }
-
-    public Set<Parameter> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(Set<Parameter> parameters) {
-        this.parameters = parameters;
     }
 
     public Integer getCount() {

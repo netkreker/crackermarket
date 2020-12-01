@@ -8,6 +8,7 @@ import java.util.Set;
 @Entity
 @Table(name = "CATEGORY")
 public class Category extends BaseEntity {
+
     @ManyToOne
     @JoinColumn(name = "PARENT_CATEGORY")
     private Category parentCategory;

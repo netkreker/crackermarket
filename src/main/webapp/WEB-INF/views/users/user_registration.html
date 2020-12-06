@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="UTF-8">
+        <title>Registration</title>
+    </head>
+    <body>
+        <script th:src="@{/assets/js/completeUserRegistration.js}"></script>
+        <!---->
+        <H1>Registration new user</H1>
+        <form onsubmit="return registerUser()" th:method="POST" th:action="@{/users/register}" th:object="${user}">
+
+            <table>
+
+                <tr>
+                    <td><label for="customerSurname">Surname</label>                                </td>
+                    <td><input type="text" th:field="*{surname}" id="customerSurname">              </td>
+                </tr>
+
+                <br>
+
+                <tr>
+                    <td><label for="customerName">First name</label>                                </td>
+                    <td><input type="text" th:field="*{name}" id="customerName">                    </td>
+                </tr>
+
+                <br>
+
+                <tr>
+                    <td><label for="customerUsername">Username</label>                              </td>
+                    <td><input type="text" th:field="*{userName}" id="customerUsername">            </td>
+                </tr>
+
+                <br>
+
+                <tr>
+                    <td><label for="customerPassword">Password</label>                              </td>
+                    <td><input type="password" th:field="*{password}" id="customerPassword">        </td>
+                </tr>
+
+                <br>
+
+                <tr>
+                    <td><label for="customerPasswordConfirm">Confirm password</label>               </td>
+                    <td><input type="password" id="customerPasswordConfirm">                        </td>
+                </tr>
+
+                <br>
+
+                <tr>
+                    <td><label for="customerEmail">Email</label>                                    </td>
+                    <td><input type="email" th:field="*{email}" id="customerEmail">                 </td>
+                </tr>
+
+                <br>
+
+                <tr>
+                    <td><label for="customerPhoneNumber">Phonenumber</label>                        </td>
+                    <td><input type="number" th:field="*{phoneNumber}" id="customerPhoneNumber">    </td>
+                </tr>
+
+                <br>
+
+                <tr>
+                    <td colspan="2"><input type="submit" value="Complete registration">             </td>
+                </tr>
+
+            </table>
+        </form>
+    </body>
+</html>

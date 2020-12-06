@@ -4,8 +4,6 @@ import com.crackermarket.app.core.BaseEntity;
 import com.crackermarket.app.entities.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Set;
 
 @Entity
 @Table(name = "ACCOUNT")
@@ -105,4 +103,14 @@ public class User extends BaseEntity {
         return false;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "userName='" + userName + '\'' +
+                ", surname='" + surname + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", access=" + access +
+                '}';
+    }
 }

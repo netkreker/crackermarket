@@ -3,24 +3,35 @@ package com.crackermarket.app.entities;
 import com.crackermarket.app.core.BaseEntity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "CATEGORY")
 public class Category extends BaseEntity {
+
     @ManyToOne
     @JoinColumn(name = "PARENT_CATEGORY")
     private Category parentCategory;
 
-//    @OneToMany(mappedBy = "category")
-    @ManyToMany
-    private Set<Parameter> parameters;
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Parameter> parameters = new ArrayList<>();
 
-    public Set<Parameter> getParameters() {
+    public void addParameter(Parameter parameter) {
+        parameters.add(parameter);
+    }
+
+    public void removeParameter(Parameter parameter) {
+        parameters.remove(parameter);
+    }
+
+    public List<Parameter> getParameters() {
         return parameters;
     }
 
-    public void setParameters(Set<Parameter> parameters) {
+    public void setParameter(List<Parameter> parameters) {
         this.parameters = parameters;
     }
 

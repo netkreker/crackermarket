@@ -51,7 +51,7 @@ public class CategoryController {
         if(parameterId != null) {
             Set<Parameter> parameterSet = new HashSet<>();
             parameterSet.add(parameterDao.findParameterById(UUID.fromString(parameterId)));
-            category.setParameters(parameterSet);
+//            category.setParameters(parameterSet);
         }
 
         categoryDAO.saveCategory(category);
@@ -71,7 +71,7 @@ public class CategoryController {
 
         model.addAttribute("category", category);
         model.addAttribute("parentCategories", parentCategories);
-        model.addAttribute("categoryParameters", category.getParameters());
+//        model.addAttribute("categoryParameters", category.getParameters());
         model.addAttribute("categoryId", category.getId());
         return "/categories/category_editor";
     }

@@ -19,6 +19,22 @@ public class Feedback extends BaseEntity {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "PRODUCT_ID")
+    private Product product;
+
+    public void setRate(Rate rate) {
+        this.rate = rate;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
     @Column(name = "RATE")
     public String getRate() {
         if (rate == Rate.GREAT)

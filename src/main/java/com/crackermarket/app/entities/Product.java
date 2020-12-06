@@ -9,23 +9,18 @@ import java.util.Set;
 @Entity
 @Table(name = "PRODUCT")
 public class Product extends BaseEntity {
-    @ManyToOne
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "CATEGORY_ID")
     private Category category;
+
     @Column(name = "PRICE")
     private BigDecimal price;
-    @OneToMany(mappedBy = "product")
-    private Set<Parameter> parameters;
+
+
     @Column(name = "COUNT")
     private Integer count;
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 
     public BigDecimal getPrice() {
         return price;
@@ -35,19 +30,19 @@ public class Product extends BaseEntity {
         this.price = price;
     }
 
-    public Set<Parameter> getParameters() {
-        return parameters;
-    }
-
-    public void setParameters(Set<Parameter> parameters) {
-        this.parameters = parameters;
-    }
-
     public Integer getCount() {
         return count;
     }
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

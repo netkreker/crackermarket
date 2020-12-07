@@ -52,6 +52,13 @@ public class UserDAO {
         return users;
     }
 
+    public User findUserByUserName(String userName){
+        entityManager.getTransaction().begin();
+        List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.userName =:userName").setParameter("userName", userName).getResultList();
+        entityManager.getTransaction().commit();
+        return users.get(0);
+    }
+
     public List<User> findUsersByEmail(String email){
         List<User> users = null;
         entityManager.getTransaction().begin();

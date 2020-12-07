@@ -4,66 +4,69 @@
     <head>
         <meta charset="UTF-8">
         <title>Registration</title>
+        <script ENGINE="text/javascript" src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     </head>
     <body>
         <script th:src="@{/assets/js/completeUserRegistration.js}"></script>
-        <!---->
+
+    <!--th:method="POST" th:action="@{/users/register}"-->
+
         <H1>Registration new user</H1>
-        <form onsubmit="return registerUser()" th:method="POST" th:action="@{/users/register}" th:object="${user}">
+        <form id="registerForm" name="registerForm" onsubmit="return registerUser()">
 
             <table>
 
                 <tr>
-                    <td><label for="customerSurname">Surname</label>                                </td>
-                    <td><input type="text" th:field="*{surname}" id="customerSurname">              </td>
+                    <td><label for="surname">Surname</label>                          </td>
+                    <td><input type="text" id="surname" name="surname">               </td>
                 </tr>
 
                 <br>
 
                 <tr>
-                    <td><label for="customerName">First name</label>                                </td>
-                    <td><input type="text" th:field="*{name}" id="customerName">                    </td>
+                    <td><label for="name">First name</label>                          </td>
+                    <td><input type="text" id="name" name="name">                     </td>
                 </tr>
 
                 <br>
 
                 <tr>
-                    <td><label for="customerUsername">Username</label>                              </td>
-                    <td><input type="text" th:field="*{userName}" id="customerUsername">            </td>
+                    <td><label for="username">Username</label>                        </td>
+                    <td><input type="text" id="userName" name="userName">             </td>
                 </tr>
 
                 <br>
 
                 <tr>
-                    <td><label for="customerPassword">Password</label>                              </td>
-                    <td><input type="password" th:field="*{password}" id="customerPassword">        </td>
+                    <td><label for="password">Password</label>                        </td>
+                    <td><input type="password" id="password" name="password">         </td>
                 </tr>
 
                 <br>
 
                 <tr>
-                    <td><label for="customerPasswordConfirm">Confirm password</label>               </td>
-                    <td><input type="password" id="customerPasswordConfirm">                        </td>
+                    <td><label for="passwordConfirm">Confirm password</label>          </td>
+                    <td><input type="password" id="passwordConfirm">                   </td>
                 </tr>
 
                 <br>
 
                 <tr>
-                    <td><label for="customerEmail">Email</label>                                    </td>
-                    <td><input type="email" th:field="*{email}" id="customerEmail">                 </td>
+                    <td><label for="email">Email</label>                               </td>
+                    <td><input type="email" id="email" name="email">                   </td>
                 </tr>
 
                 <br>
 
                 <tr>
-                    <td><label for="customerPhoneNumber">Phonenumber</label>                        </td>
-                    <td><input type="number" th:field="*{phoneNumber}" id="customerPhoneNumber">    </td>
+                    <td><label for="phoneNumber">Phonenumber</label>                   </td>
+                    <td><input type="number" id="phoneNumber" name="phoneNumber">      </td>
                 </tr>
 
                 <br>
 
                 <tr>
-                    <td colspan="2"><input type="submit" value="Complete registration">             </td>
+                    <td colspan="2"><input type="submit" value="Complete registration"></td>
                 </tr>
 
             </table>

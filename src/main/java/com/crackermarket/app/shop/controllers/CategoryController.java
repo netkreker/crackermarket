@@ -1,9 +1,9 @@
-package com.crackermarket.app.controllers.category;
+package com.crackermarket.app.shop.controllers;
 
-import com.crackermarket.app.entities.Category;
-import com.crackermarket.app.entities.Parameter;
-import com.crackermarket.app.services.CategoryDAO;
-import com.crackermarket.app.services.ParameterDAO;
+import com.crackermarket.app.shop.entities.Category;
+import com.crackermarket.app.shop.entities.Parameter;
+import com.crackermarket.app.shop.services.CategoryService;
+import com.crackermarket.app.shop.services.ParameterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,24 +20,24 @@ import java.util.UUID;
 @RequestMapping("/category")
 public class CategoryController {
     @Autowired
-    CategoryDAO categoryDAO;
+    CategoryService categoryService;
     @Autowired
-    ParameterDAO parameterDao;
+    ParameterService parameterService;
     @Autowired
     private EntityManager entityManager;
 
 
     @GetMapping("/browser")
     public String showAllCategories(Model model) {
-        model.addAttribute("categories", categoryDAO.findAllCategories());
+        model.addAttribute("categories", categoryService.findAll());
         return "categories/category_browser";
     }
 
     @GetMapping("/new")
     public String createCategory(Model model) {
         model.addAttribute("category", new Category());
-        model.addAttribute("categories", categoryDAO.findAllCategories());
-        model.addAttribute("parameters", parameterDao.findAllParameters());
+        model.addAttribute("categories", categoryService.findAll());
+        model.addAttribute("parameters", parameterService.findAll());
         return "/categories/category_creator";
     }
 
@@ -45,22 +45,21 @@ public class CategoryController {
     public String createCategory(@ModelAttribute("category") Category category,
                                  @RequestParam(value = "parentCategoryId", required = false) String parentCategoryId,
                                  @RequestParam(value = "parameterId", required = false) String parameterId) {
-        if(parentCategoryId != null) {
-            category.setParentCategory(categoryDAO.findCategoryById(UUID.fromString(parentCategoryId)));
+        if(parentCategoryId != null && !"".equals(parentCategoryId)) {
+            category.setParentCategory(categoryService.findById(UUID.fromString(parentCategoryId)));
         }
-        if(parameterId != null) {
+        if(parameterId != null && !"".equals(parameterId)) {
             Set<Parameter> parameterSet = new HashSet<>();
-            parameterSet.add(parameterDao.findParameterById(UUID.fromString(parameterId)));
-//            category.setParameters(parameterSet);
+            parameterSet.add(parameterService.findById(UUID.fromString(parameterId)));
         }
 
-        categoryDAO.saveCategory(category);
+        categoryService.save(category);
         return "redirect:/";
     }
 
     @GetMapping("/edit/{id}")
     public String editEmployee(@PathVariable("id") String id, Model model) {
-        Category category = categoryDAO.findCategoryById(UUID.fromString(id));
+        Category category = categoryService.findById(UUID.fromString(id));
         model.addAttribute("category", category);
 
         entityManager.getTransaction().begin();
@@ -71,7 +70,6 @@ public class CategoryController {
 
         model.addAttribute("category", category);
         model.addAttribute("parentCategories", parentCategories);
-//        model.addAttribute("categoryParameters", category.getParameters());
         model.addAttribute("categoryId", category.getId());
         return "/categories/category_editor";
     }
@@ -82,7 +80,7 @@ public class CategoryController {
         Category category = new Category();
         category.setId(UUID.fromString(categoryId));
         category.setName(categoryName);
-        categoryDAO.updateCategory(category);
+        categoryService.update(category);
         return "redirect:/category/browser";
     }
 }

@@ -1,4 +1,4 @@
-package com.crackermarket.app.entities;
+package com.crackermarket.app.shop.entities;
 
 import com.crackermarket.app.core.BaseEntity;
 

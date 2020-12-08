@@ -1,10 +1,8 @@
 package com.crackermarket.app.user;
 
 import com.crackermarket.app.core.BaseEntity;
-import com.crackermarket.app.entities.Product;
 import com.crackermarket.app.enumerations.Rate;
-import com.crackermarket.app.user.Address;
-import com.crackermarket.app.user.User;
+import com.crackermarket.app.shop.entities.Product;
 
 import javax.persistence.*;
 

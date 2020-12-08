@@ -28,6 +28,7 @@
                 </td>
                 <td>
                     <select id="parentCategory" name="parentCategoryId"  class="text-field-class">
+                        <option value=""></option>
                         <option th:each="category : ${categories}" th:value="${category.getId()}" th:text="${category.name}"></option>
                     </select>
                 </td>
@@ -38,6 +39,7 @@
                 </td>
                 <td>
                     <select id="parameters" name="parameterId"  class="text-field-class">
+                        <option value=""></option>
                         <option th:each="parameter : ${parameters}" th:value="${parameter.getId()}" th:text="${parameter.name}"></option>
                     </select>
                 </td>

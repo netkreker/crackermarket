@@ -1,12 +1,14 @@
-package com.crackermarket.app.entities;
+package com.crackermarket.app.shop.entities;
 
 import com.crackermarket.app.core.BaseEntity;
 import com.crackermarket.app.user.User;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
-@Table(name = "USER_ORDER")
+@Table(name = "ORDERS")
 public class Order extends BaseEntity {
 
     @Column(name = "TOTAL_PRICE")
@@ -16,7 +18,30 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "USER_ID")
     private User user;
 
+    @OneToMany
+    @JoinTable(name = "ORDERS_PRODUCTS",
+            joinColumns = {@JoinColumn(name = "order_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "product_id", referencedColumnName = "id")})
+    private Set<Product> products = new HashSet<>();
+
     // TODO: присобачить связь между продуктами и заказом
+
+
+    public Set<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Set<Product> products) {
+        this.products = products;
+    }
+
+    public void addProduct(Product product) {
+        products.add(product);
+    }
+
+    public void removeProduct(Product product) {
+        products.remove(product);
+    }
 
     public Boolean addProduct(){
         return true;

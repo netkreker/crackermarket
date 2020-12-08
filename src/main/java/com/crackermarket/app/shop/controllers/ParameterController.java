@@ -1,8 +1,8 @@
-package com.crackermarket.app.controllers.parameter;
+package com.crackermarket.app.shop.controllers;
 
-import com.crackermarket.app.entities.Parameter;
-import com.crackermarket.app.entities.ParameterType;
-import com.crackermarket.app.services.ParameterDAO;
+import com.crackermarket.app.shop.entities.Parameter;
+import com.crackermarket.app.shop.entities.ParameterType;
+import com.crackermarket.app.shop.services.ParameterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 public class ParameterController {
 
     @Autowired
-    ParameterDAO parameterDao;
+    ParameterService parameterService;
 
     @GetMapping("/new")
     public String createNewParameter(Model model) {
@@ -29,7 +29,7 @@ public class ParameterController {
             case "number" : parameter.setParameterType(ParameterType.INTEGER); break;
             case "logic" : parameter.setParameterType(ParameterType.BOOLEAN); break;
         }
-        parameterDao.saveParameter(parameter);
+        parameterService.save(parameter);
         return "redirect:/category/new";
     }
 }

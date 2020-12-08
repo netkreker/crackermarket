@@ -1,6 +1,6 @@
 package com.crackermarket.app.services;
 
-import com.crackermarket.app.entities.Feedback;
+import com.crackermarket.app.user.Feedback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,26 +1,27 @@
 package com.crackermarket.app.controllers;
 
-import com.crackermarket.app.entities.*;
-import com.crackermarket.app.enumerations.Rate;
-import com.crackermarket.app.services.*;
+
+import com.crackermarket.app.shop.entities.*;
+import com.crackermarket.app.shop.services.CategoryService;
+import com.crackermarket.app.shop.services.ParameterService;
+import com.crackermarket.app.shop.services.ParameterValueService;
+import com.crackermarket.app.shop.services.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
 @Controller
 public class MainController {
     @Autowired
-    CategoryDAO categoryDAO;
+    CategoryService categoryService;
     @Autowired
-    ParameterDAO parameterDAO;
+    ParameterService parameterService;
     @Autowired
-    ProductDAO productDAO;
+    ProductService productService;
     @Autowired
-    ParameterValueDAO parameterValueDAO;
+    ParameterValueService parameterValueService;
 
 
 
@@ -52,10 +53,9 @@ public class MainController {
 
         category.addParameter(parameter);
 
-
-        categoryDAO.saveCategory(category);
-        productDAO.saveProduct(product);
-        parameterValueDAO.saveParameterValue(parameterValue);
+        categoryService.save(category);
+        productService.save(product);
+        parameterValueService.save(parameterValue);
         return "index";
     }
 }

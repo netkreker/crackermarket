@@ -1,6 +1,6 @@
-package com.crackermarket.app.services;
+package com.crackermarket.app.shop.repository;
 
-import com.crackermarket.app.entities.Category;
+import com.crackermarket.app.shop.entities.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,19 +13,19 @@ public class CategoryDAO {
     @Autowired
     private EntityManager entityManager;
 
-    public Category findCategoryById(UUID id) {
+    public Category findById(UUID id) {
         entityManager.getTransaction().begin();
         Category category = entityManager.find(Category.class, id);
         entityManager.getTransaction().commit();
         return category;
     }
-    public void saveCategory(Category category) {
+    public void save(Category category) {
         entityManager.getTransaction().begin();
         entityManager.persist(category);
         entityManager.getTransaction().commit();
     }
-    
-    public List<Category> findCategoryByName(String name) {
+
+    public List<Category> findByName(String name) {
         List<Category> categories = null;
         entityManager.getTransaction().begin();
         categories = entityManager.createQuery("SELECT c FROM Category c WHERE c.name = :name")
@@ -33,7 +33,7 @@ public class CategoryDAO {
         entityManager.getTransaction().commit();
         return categories;
     }
-    public List<Category> findAllCategories(){
+    public List<Category> findAll(){
         List<Category> categories = null;
         entityManager.getTransaction().begin();
         categories = entityManager.createQuery("SELECT c FROM Category c").getResultList();
@@ -41,9 +41,15 @@ public class CategoryDAO {
         return categories;
     }
 
-    public void updateCategory(Category category) {
+    public void update(Category category) {
         entityManager.getTransaction().begin();
         entityManager.merge(category);
+        entityManager.getTransaction().commit();
+    }
+
+    public void delete(Category category) {
+        entityManager.getTransaction().begin();
+        entityManager.remove(category);
         entityManager.getTransaction().commit();
     }
 }

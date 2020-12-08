@@ -1,7 +1,9 @@
 package com.crackermarket.app.user;
 
 import com.crackermarket.app.core.BaseEntity;
-import com.crackermarket.app.entities.*;
+import com.crackermarket.app.shop.entities.Category;
+import com.crackermarket.app.shop.entities.Order;
+import com.crackermarket.app.shop.entities.Product;
 
 import javax.persistence.*;
 

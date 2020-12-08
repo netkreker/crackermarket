@@ -1,7 +1,6 @@
 package com.crackermarket.app.services;
 
-import com.crackermarket.app.entities.Address;
-import com.crackermarket.app.entities.User;
+import com.crackermarket.app.user.Address;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -69,5 +68,14 @@ public class AddressDAO {
                 .setParameter("city", city).getResultList();
         entityManager.getTransaction().commit();
         return addresses;
+    }
+
+    public Address findAddressByUserName(String username){
+        List<Address> addresses = null;
+        entityManager.getTransaction().begin();
+        addresses = entityManager.createQuery("SELECT a FROM Address a WHERE a.user.userName = :username")
+                .setParameter("username", username).getResultList();
+        entityManager.getTransaction().commit();
+        return addresses.get(0);
     }
 }

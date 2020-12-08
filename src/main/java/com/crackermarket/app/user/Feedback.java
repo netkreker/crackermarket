@@ -1,7 +1,10 @@
-package com.crackermarket.app.entities;
+package com.crackermarket.app.user;
 
 import com.crackermarket.app.core.BaseEntity;
+import com.crackermarket.app.entities.Product;
 import com.crackermarket.app.enumerations.Rate;
+import com.crackermarket.app.user.Address;
+import com.crackermarket.app.user.User;
 
 import javax.persistence.*;
 
@@ -9,7 +12,8 @@ import javax.persistence.*;
 @Table(name = "FEEDBACK")
 public class Feedback extends BaseEntity {
 
-
+    @Column(name = "RATE")
+    @Enumerated(EnumType.STRING)
     private Rate rate;
 
     @Column(name = "RECORD")
@@ -23,19 +27,6 @@ public class Feedback extends BaseEntity {
     @JoinColumn(name = "PRODUCT_ID")
     private Product product;
 
-    public void setRate(Rate rate) {
-        this.rate = rate;
-    }
-
-    public Product getProduct() {
-        return product;
-    }
-
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
-    @Column(name = "RATE")
     public String getRate() {
         if (rate == Rate.GREAT)
             return "great";
@@ -51,7 +42,7 @@ public class Feedback extends BaseEntity {
     }
 
     public void setRate(String rate) {
-        switch (rate) {
+        switch (rate.toLowerCase()) {
             case "great":
                 this.rate = Rate.GREAT;
                 break;
@@ -81,4 +72,17 @@ public class Feedback extends BaseEntity {
 
     public void setUser(User user) { this.user = user; }
 
+    public Product getProduct() { return product; }
+
+    public void setProduct(Product product) { this.product = product; }
+
+    @Override
+    public String toString() {
+        return "Feedback{" +
+                "rate=" + rate.toString() +
+                ", record='" + record + '\'' +
+                ", user=" + user +
+                ", product=" + product +
+                '}';
+    }
 }

@@ -7,9 +7,9 @@ import java.util.UUID;
 
 public interface CategoryService {
     public void save(Category category);
-    public Category findById(UUID id);
+    public Category findById(String id);
     public List<Category> findByName(String name);
     public List<Category> findAll();
-    public void delete(Category category);
+    public void delete(UUID id);
     public void update(Category category);
 }

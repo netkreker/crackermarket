@@ -1,10 +1,9 @@
-package com.crackermarket.app.entities;
+package com.crackermarket.app.shop.entities;
 
 import com.crackermarket.app.core.BaseEntity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.Set;
 
 @Entity
 @Table(name = "PRODUCT")
@@ -21,6 +20,16 @@ public class Product extends BaseEntity {
     @Column(name = "COUNT")
     private Integer count;
 
+    @Column(name = "PHOTO_URL")
+    private String photoUrl;
+
+    public String getPhotoUrl() {
+        return photoUrl;
+    }
+
+    public void setPhotoUrl(String photoUrl) {
+        this.photoUrl = photoUrl;
+    }
 
     public BigDecimal getPrice() {
         return price;

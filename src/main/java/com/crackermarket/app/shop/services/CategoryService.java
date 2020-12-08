@@ -10,6 +10,6 @@ public interface CategoryService {
     public Category findById(String id);
     public List<Category> findByName(String name);
     public List<Category> findAll();
-    public void delete(UUID id);
+    public void delete(String id);
     public void update(Category category);
 }

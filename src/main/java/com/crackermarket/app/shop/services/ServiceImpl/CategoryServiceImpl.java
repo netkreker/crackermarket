@@ -44,9 +44,8 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public void delete(UUID id) {
-        Category category = new Category();
-        categoryDAO.delete(category);
+    public void delete(String id) {
+        categoryDAO.delete(categoryDAO.findById(UUID.fromString(id)));
     }
 
     @Override

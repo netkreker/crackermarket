@@ -37,6 +37,7 @@ public class CategoryRestController {
     public ResponseEntity<Category> saveCategory(@RequestBody Category category) {
         HttpHeaders httpHeaders = new HttpHeaders();
         if(category.getName() != null && !"".equals(category.getName())) {
+            categoryService.save(category);
             logger.info(HttpStatus.CREATED);
             return new ResponseEntity<>(category, httpHeaders, HttpStatus.CREATED);
         } else {
@@ -56,6 +57,18 @@ public class CategoryRestController {
             logger.error(HttpStatus.BAD_REQUEST);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
 
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Category> deleteCategory(@PathVariable String id) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        if(id != null && !"".equals(id)) {
+            categoryService.delete(id);
+            logger.info(HttpStatus.OK);
+            return new ResponseEntity<>(httpHeaders, HttpStatus.OK);
+        } else {
+            logger.error(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 }

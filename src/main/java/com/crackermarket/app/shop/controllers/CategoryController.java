@@ -76,10 +76,18 @@ public class CategoryController {
 
     @PostMapping("/update")
     public String updateCategory(@RequestParam(value = "categoryName") String categoryName,
-                                 @RequestParam(value = "categoryId") String categoryId) {
+                                 @RequestParam(value = "categoryId") String categoryId,
+                                 @RequestParam(value = "parentCategoryId") String parentCategoryId) {
         Category category = new Category();
-        category.setId(UUID.fromString(categoryId));
-        category.setName(categoryName);
+        if(categoryId != null && !"".equals(categoryId)) {
+            category.setId(UUID.fromString(categoryId));
+        }
+        if(parentCategoryId != null && !"".equals(parentCategoryId)) {
+            category.setParentCategory(categoryService.findById(UUID.fromString(parentCategoryId)));
+        }
+        if(categoryName != null && !"".equals(categoryName)) {
+            category.setName(categoryName);
+        }
         categoryService.update(category);
         return "redirect:/category/browser";
     }

@@ -29,7 +29,7 @@
             </td>
             <td th:if="${!parentCategories.empty}">
                 <select id="parentCategory" name="parentCategoryId">
-<!--                    <option th:value="${category.parentCategory.id}" th:text="${category.parentCategory.name}"></option>-->
+                    <option value=""></option>
                     <option th:each="parentCategory : ${parentCategories}"
                             th:value="${parentCategory.id}" th:text="${parentCategory.name}"></option>
                 </select>

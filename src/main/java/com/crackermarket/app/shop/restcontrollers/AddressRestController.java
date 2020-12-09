@@ -1,6 +1,7 @@
 package com.crackermarket.app.shop.restcontrollers;
 
 import com.crackermarket.app.core.LogEntity;
+import com.crackermarket.app.core.StackTraceToStringConverter;
 import com.crackermarket.app.shop.entities.user.Address;
 import com.crackermarket.app.shop.entities.user.User;
 import com.crackermarket.app.shop.enumerations.LogEntityType;
@@ -33,13 +34,23 @@ public class AddressRestController {
     @RequestMapping(value = "/users/{id}/address/new", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createNewAddress(@PathVariable(name="id") String id, @RequestBody Address address){
 
+        try{
+            UUID.fromString(id);
+        }
+        catch(IllegalArgumentException ex){
+            LogEntity log = new LogEntity(LogEntityType.FATAL, this.getClass(), "createNewAddress", HttpStatus.BAD_REQUEST, "Id \'" + id + "\' is invalid", StackTraceToStringConverter.toString(ex));
+            logService.save(log);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (address == null){
             LogEntity log = new LogEntity(LogEntityType.ERROR, this.getClass(), "createNewAddress", HttpStatus.BAD_REQUEST, "Address with not created", null);
             logService.save(log);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        User user = userService.findUserById(UUID.fromString(id));
+        User user = null;
+        user = userService.findUserById(UUID.fromString(id));
 
         if (user == null){
             LogEntity log = new LogEntity(LogEntityType.ERROR, this.getClass(), "createNewAddress", HttpStatus.NOT_FOUND, "User with id\'" + id + "\' not found", null);
@@ -57,7 +68,9 @@ public class AddressRestController {
 
     @RequestMapping(value = "/users/{username}/address", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findUserAddress(@PathVariable(name = "username") String username){
-        Address address = addressService.findAddressByUserName(username);
+
+        Address address = null;
+        address = addressService.findAddressByUserName(username);
 
         if (address == null){
 
@@ -73,7 +86,9 @@ public class AddressRestController {
 
     @RequestMapping(value = "/address/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findAllAddresses(){
-        List<Address> addresses = addressService.findAllAddresses();
+
+        List<Address> addresses = null;
+        addresses = addressService.findAllAddresses();
 
         if (addresses == null || addresses.isEmpty()){
             LogEntity log = new LogEntity(LogEntityType.ERROR, this.getClass(), "findAllAddresses", HttpStatus.NO_CONTENT, "Addresses not found", null);
@@ -81,20 +96,31 @@ public class AddressRestController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
 
-        List<UUID> adressesId = new ArrayList<>();
+        List<UUID> addressesId = new ArrayList<>();
 
         for (Address address: addresses)
-            adressesId.add(address.getId());
+            addressesId.add(address.getId());
 
         LogEntity log = new LogEntity(LogEntityType.INFO, this.getClass(), "findAllAddresses", HttpStatus.FOUND, "Addresses found", null);
         logService.save(log);
 
-        return new ResponseEntity<>(adressesId, HttpStatus.FOUND);
+        return new ResponseEntity<>(addressesId, HttpStatus.FOUND);
     }
 
     @RequestMapping(value = "/address/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findAddressById(@PathVariable(name = "id") String id){
-        Address address = addressService.findAddressById(UUID.fromString(id));
+
+        try{
+            UUID.fromString(id);
+        }
+        catch(IllegalArgumentException ex){
+            LogEntity log = new LogEntity(LogEntityType.FATAL, this.getClass(), "findAddressById", HttpStatus.BAD_REQUEST, "Id \'" + id + "\' is invalid", StackTraceToStringConverter.toString(ex));
+            logService.save(log);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Address address = null;
+        address = addressService.findAddressById(UUID.fromString(id));
 
         if (address == null){
             LogEntity log = new LogEntity(LogEntityType.ERROR, this.getClass(), "findAddressById", HttpStatus.NO_CONTENT, "Address with id \'" + id + "\' not found", null);
@@ -110,6 +136,15 @@ public class AddressRestController {
 
     @RequestMapping(value = "/address/{id}/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateAddressById(@PathVariable(name = "id") String id, @RequestBody Address address){
+
+        try{
+            UUID.fromString(id);
+        }
+        catch(IllegalArgumentException ex){
+            LogEntity log = new LogEntity(LogEntityType.FATAL, this.getClass(), "updateAddressById", HttpStatus.BAD_REQUEST, "Id \'" + id + "\' is invalid", StackTraceToStringConverter.toString(ex));
+            logService.save(log);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
         if (address == null){
             LogEntity log = new LogEntity(LogEntityType.ERROR, this.getClass(), "updateAddressById", HttpStatus.BAD_REQUEST, "Address from request is invalid", null);
@@ -142,6 +177,16 @@ public class AddressRestController {
 
     @RequestMapping(value = "/address/{id}/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteAddressById(@PathVariable(name="id") String id){
+
+        try{
+            UUID.fromString(id);
+        }
+        catch(IllegalArgumentException ex){
+            LogEntity log = new LogEntity(LogEntityType.FATAL, this.getClass(), "deleteAddressById", HttpStatus.BAD_REQUEST, "Id \'" + id + "\' is invalid", StackTraceToStringConverter.toString(ex));
+            logService.save(log);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Address address = null;
         address = addressService.findAddressById(UUID.fromString(id));
 
@@ -155,7 +200,7 @@ public class AddressRestController {
 
         LogEntity log = new LogEntity(LogEntityType.INFO, this.getClass(), "deleteAddressById", HttpStatus.OK, "Address with id \'" + id + "\' deleted", null);
         logService.save(log);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(address.getId(), HttpStatus.OK);
 
     }
 }

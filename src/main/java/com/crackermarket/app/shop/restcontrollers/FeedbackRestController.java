@@ -1,6 +1,7 @@
 package com.crackermarket.app.shop.restcontrollers;
 
 import com.crackermarket.app.core.LogEntity;
+import com.crackermarket.app.core.StackTraceToStringConverter;
 import com.crackermarket.app.shop.entities.user.Feedback;
 import com.crackermarket.app.shop.entities.user.User;
 import com.crackermarket.app.shop.enumerations.LogEntityType;
@@ -33,13 +34,23 @@ public class FeedbackRestController {
     @RequestMapping(value = "/users/{id}/feedback/new", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> createFeedback(@PathVariable(name = "id") String id, @RequestBody Feedback feedback){
 
+        try{
+            UUID.fromString(id);
+        }
+        catch(IllegalArgumentException ex){
+            LogEntity log = new LogEntity(LogEntityType.FATAL, this.getClass(), "createFeedback", HttpStatus.BAD_REQUEST, "Id \'" + id + "\' is invalid", StackTraceToStringConverter.toString(ex));
+            logService.save(log);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (feedback == null){
             LogEntity log = new LogEntity("error", this.getClass(), "createFeedback", HttpStatus.BAD_REQUEST, "Feedback not created", null);
             logService.save(log);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        User user = userService.findUserById(UUID.fromString(id));
+        User user = null;
+        user = userService.findUserById(UUID.fromString(id));
 
         if (user == null){
             LogEntity log = new LogEntity("error", this.getClass(), "createFeedback", HttpStatus.NOT_FOUND, "User with id\'" + id + "\' not found", null);
@@ -78,9 +89,18 @@ public class FeedbackRestController {
 
     @RequestMapping(value = "/users/{id}/feedback/all", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findUserFeedbacks(@PathVariable(name = "id") String id){
-        List<Feedback> feedbacks = null;
 
-        User user = userService.findUserById(UUID.fromString(id));
+        try{
+            UUID.fromString(id);
+        }
+        catch(IllegalArgumentException ex){
+            LogEntity log = new LogEntity(LogEntityType.FATAL, this.getClass(), "findUserFeedbacks", HttpStatus.BAD_REQUEST, "Id \'" + id + "\' is invalid", StackTraceToStringConverter.toString(ex));
+            logService.save(log);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        User user = null;
+        user = userService.findUserById(UUID.fromString(id));
 
         if (user == null){
             LogEntity log = new LogEntity(LogEntityType.ERROR, this.getClass(), "findUserFeedbacks", HttpStatus.NOT_FOUND, "User with id \'"+ id + "\' not found", null);
@@ -88,6 +108,7 @@ public class FeedbackRestController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        List<Feedback> feedbacks = null;
         feedbacks = feedbackService.findAllUserFeedbacks(UUID.fromString(id));
 
         if (feedbacks == null || feedbacks.isEmpty()){
@@ -108,7 +129,17 @@ public class FeedbackRestController {
     @RequestMapping(value = "/feedbacks/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> findFeedbackById(@PathVariable(name = "id") String id){
 
-        Feedback feedback = feedbackService.findFeedbackById(UUID.fromString(id));
+        try{
+            UUID.fromString(id);
+        }
+        catch(IllegalArgumentException ex){
+            LogEntity log = new LogEntity(LogEntityType.FATAL, this.getClass(), "findFeedbackById", HttpStatus.BAD_REQUEST, "Id \'" + id + "\' is invalid", StackTraceToStringConverter.toString(ex));
+            logService.save(log);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
+        Feedback feedback = null;
+        feedback = feedbackService.findFeedbackById(UUID.fromString(id));
 
         if (feedback == null){
             LogEntity log = new LogEntity(LogEntityType.ERROR, this.getClass(), "findFeedbackById", HttpStatus.NOT_FOUND, "Feedback with id \'"+ id + "\' not found", null);
@@ -124,10 +155,19 @@ public class FeedbackRestController {
     @RequestMapping(value = "/feedback/{id}/update", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> updateFeedbackById(@PathVariable(name = "id") String id, @RequestBody Feedback feedback){
 
+        try{
+            UUID.fromString(id);
+        }
+        catch(IllegalArgumentException ex){
+            LogEntity log = new LogEntity(LogEntityType.FATAL, this.getClass(), "updateFeedbackById", HttpStatus.BAD_REQUEST, "Id \'" + id + "\' is invalid", StackTraceToStringConverter.toString(ex));
+            logService.save(log);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         if (feedback == null){
             LogEntity log = new LogEntity(LogEntityType.ERROR, this.getClass(), "updateFeedbackById", HttpStatus.BAD_REQUEST, "Feedback from request is invalid", null);
             logService.save(log);
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(feedback.getId(), HttpStatus.BAD_REQUEST);
         }
 
         Feedback oldFeedback = null;
@@ -155,6 +195,15 @@ public class FeedbackRestController {
     @RequestMapping(value = "/feedback/{id}/delete", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> deleteFeedbackById(@PathVariable(name="id") String id){
 
+        try{
+            UUID.fromString(id);
+        }
+        catch(IllegalArgumentException ex){
+            LogEntity log = new LogEntity(LogEntityType.FATAL, this.getClass(), "deleteFeedbackById", HttpStatus.BAD_REQUEST, "Id \'" + id + "\' is invalid", StackTraceToStringConverter.toString(ex));
+            logService.save(log);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         Feedback feedback = null;
         feedback = feedbackService.findFeedbackById(UUID.fromString(id));
 
@@ -168,7 +217,7 @@ public class FeedbackRestController {
 
         LogEntity log = new LogEntity(LogEntityType.INFO, this.getClass(), "deleteFeedbackById", HttpStatus.OK, "Feedback with id \'" + id + "\' deleted", null);
         logService.save(log);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(feedback.getId(), HttpStatus.OK);
 
     }
 }

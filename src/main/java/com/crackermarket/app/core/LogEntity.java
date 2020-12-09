@@ -24,7 +24,8 @@ public class LogEntity extends BaseEntity {
     @Column(name = "MESSAGE")
     private String message;
 
-    @Column(name = "STACKTRACE")
+    @Lob
+    @Column(name = "STACKTRACE", length = Integer.MAX_VALUE)
     private String stackTrace;
 
     @Column(name = "CLASS")

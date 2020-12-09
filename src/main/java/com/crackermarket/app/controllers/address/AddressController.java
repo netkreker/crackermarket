@@ -1,9 +1,9 @@
 package com.crackermarket.app.controllers.address;
 
-import com.crackermarket.app.services.AddressDAO;
-import com.crackermarket.app.services.UserDAO;
-import com.crackermarket.app.user.Address;
-import com.crackermarket.app.user.User;
+import com.crackermarket.app.shop.repository.AddressDAO;
+import com.crackermarket.app.shop.repository.UserDAO;
+import com.crackermarket.app.shop.entities.user.Address;
+import com.crackermarket.app.shop.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

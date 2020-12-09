@@ -1,11 +1,8 @@
-package com.crackermarket.app.core.ServiceImpl;
+package com.crackermarket.app.shop.services.ServiceImpl;
 
-import com.crackermarket.app.core.LogEntityService;
-import com.crackermarket.app.shop.entities.Category;
-import com.crackermarket.app.shop.entities.LogEntity;
-import com.crackermarket.app.shop.repository.CategoryDAO;
+import com.crackermarket.app.shop.services.LogEntityService;
+import com.crackermarket.app.core.LogEntity;
 import com.crackermarket.app.shop.repository.LogEntityDAO;
-import com.crackermarket.app.shop.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

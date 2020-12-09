@@ -1,13 +1,9 @@
-package com.crackermarket.app.shop.entities;
+package com.crackermarket.app.core;
 
 import com.crackermarket.app.core.BaseEntity;
-import com.crackermarket.app.core.LogEntityService;
-import com.crackermarket.app.core.ServiceImpl.LogEntityServiceImpl;
-import com.crackermarket.app.enumerations.LogEntityType;
-import com.crackermarket.app.shop.repository.LogEntityDAO;
+import com.crackermarket.app.shop.enumerations.LogEntityType;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 
 import javax.persistence.*;
@@ -43,6 +39,53 @@ public class LogEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(name = "TYPE")
     private LogEntityType type;
+
+    public LogEntity(LogEntityType type, Class cl, String methodName, String message){
+
+        java.util.Date date = new java.util.Date();
+
+        this.date = Date.valueOf(parseDate(date));
+        this.time = Time.valueOf(parseTime(date));
+        this.message = message;
+        this.methodName = methodName;
+        this.className = cl.getName();
+        this.type = type;
+
+        Logger logger = Logger.getLogger(cl);
+        Logger thisLogger = Logger.getLogger(this.getClass());
+
+        switch (this.type) {
+            case FATAL: {
+                logger.setLevel(Level.FATAL);
+                logger.fatal(message);
+                logger.trace(stackTrace);
+            }
+            case ERROR: {
+                logger.setLevel(Level.ERROR);
+                logger.error(message);
+                logger.trace(stackTrace);
+            }
+            case INFO: {
+                logger.setLevel(Level.INFO);
+                logger.info(message);
+                logger.trace(stackTrace);
+            }
+            case WARNING: {
+                logger.setLevel(Level.WARN);
+                logger.warn(message);
+                logger.trace(stackTrace);
+            }
+            case DEBUG: {
+                logger.setLevel(Level.DEBUG);
+                logger.debug(message);
+                logger.trace(stackTrace);
+            }
+            default: {
+                thisLogger.setLevel(Level.ERROR);
+                thisLogger.error("Wrong type of log!");
+            }
+        }
+    }
 
     public LogEntity(String type, Class cl, String methodName, String message){
 
@@ -89,6 +132,56 @@ public class LogEntity extends BaseEntity {
                 thisLogger.error("Wrong type of log!");
             }
         }
+    }
+
+    public LogEntity(LogEntityType type, Class cl, String methodName, HttpStatus status, String message, String stackTrace) {
+
+        java.util.Date date = new java.util.Date();
+
+        this.date = Date.valueOf(parseDate(date));
+        this.time = Time.valueOf(parseTime(date));
+        this.message = message;
+        this.stackTrace = stackTrace;
+        this.methodName = methodName;
+        this.status = status.toString();
+        this.className = cl.getName();
+        this.type = type;
+
+        Logger logger = Logger.getLogger(cl);
+        Logger thisLogger = Logger.getLogger(this.getClass());
+
+        switch (this.type){
+            case FATAL:{
+                logger.setLevel(Level.FATAL);
+                logger.fatal(message);
+                logger.trace(stackTrace);
+            }
+            case ERROR:{
+                logger.setLevel(Level.ERROR);
+                logger.error(message);
+                logger.trace(stackTrace);
+            }
+            case INFO:{
+                logger.setLevel(Level.INFO);
+                logger.info(message);
+                logger.trace(stackTrace);
+            }
+            case WARNING:{
+                logger.setLevel(Level.WARN);
+                logger.warn(message);
+                logger.trace(stackTrace);
+            }
+            case DEBUG:{
+                logger.setLevel(Level.DEBUG);
+                logger.debug(message);
+                logger.trace(stackTrace);
+            }
+            default:{
+                thisLogger.setLevel(Level.ERROR);
+                thisLogger.error("Wrong type of log!");
+            }
+        }
+
     }
 
     public LogEntity(String type, Class cl, String methodName, HttpStatus status, String message, String stackTrace) {

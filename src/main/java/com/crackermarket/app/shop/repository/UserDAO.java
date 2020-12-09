@@ -1,7 +1,7 @@
-package com.crackermarket.app.services;
+package com.crackermarket.app.shop.repository;
 
-import com.crackermarket.app.user.Address;
-import com.crackermarket.app.user.User;
+import com.crackermarket.app.shop.entities.user.Address;
+import com.crackermarket.app.shop.entities.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,6 +24,12 @@ public class UserDAO {
     public void saveUser(User user) {
         entityManager.getTransaction().begin();
         entityManager.persist(user);
+        entityManager.getTransaction().commit();
+    }
+
+    public void updateUser(User user){
+        entityManager.getTransaction().begin();
+        entityManager.merge(user);
         entityManager.getTransaction().commit();
     }
 
@@ -57,6 +63,12 @@ public class UserDAO {
         List<User> users = entityManager.createQuery("SELECT u FROM User u WHERE u.userName =:userName").setParameter("userName", userName).getResultList();
         entityManager.getTransaction().commit();
         return users.get(0);
+    }
+
+    public void deleteUser(User user){
+        entityManager.getTransaction().begin();
+        entityManager.remove(user);
+        entityManager.getTransaction().commit();
     }
 
     public List<User> findUsersByEmail(String email){

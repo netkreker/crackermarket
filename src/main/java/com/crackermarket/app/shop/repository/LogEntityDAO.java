@@ -1,7 +1,6 @@
 package com.crackermarket.app.shop.repository;
 
-import com.crackermarket.app.shop.entities.Category;
-import com.crackermarket.app.shop.entities.LogEntity;
+import com.crackermarket.app.core.LogEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

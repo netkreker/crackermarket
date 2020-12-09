@@ -1,6 +1,6 @@
-package com.crackermarket.app.core;
+package com.crackermarket.app.shop.services;
 
-import com.crackermarket.app.shop.entities.LogEntity;
+import com.crackermarket.app.core.LogEntity;
 
 import java.util.List;
 

@@ -21,17 +21,14 @@ function registerUser() {
         // Creating request
 
         $.ajax({
-            type: 'POST',
-            url: '/users/register',
+            type: "POST",
+            url: "/users/register",
             data: json,
             contentType: "application/json",
             dataType: 'json'
         });
 
-        $.ajax({
-            type: 'GET',
-            url: '/address/form'
-        });
+
     }
 }
 /////////////////////////////////

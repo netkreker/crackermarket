@@ -1,7 +1,5 @@
 package com.crackermarket.app.core;
 
-import com.crackermarket.app.core.BaseEntity;
-import com.crackermarket.app.shop.enumerations.LogEntityType;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.http.HttpStatus;
